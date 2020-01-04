@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block content %}
+<div class="card shadow mb-4">
+  <!-- Card Header - Dropdown -->
+  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+    <h6 class="m-0 font-weight-bold text-primary">Listado de cotizaciones </h6>
+
+  </div>
+  <!-- Card Body -->
+  <div class="card-body">
+    {% if not object_list %}
+    <div class="alert alert-info">No Hay Cotizaciones Registradas</div>
+    {% endif %}
+    <div class="buttons-toolbar">
+        <a class="btn btn-success" href="{% url 'usuario:lista' %}"><i class="far fa-calendar-plus"></i> Lista de usuarios </a>
+    </div>
+
+    <table
+      id="table"
+      data-toggle="table"
+      data-pagination="true"
+      data-search="true"
+      data-show-columns="true"
+      data-show-toggle="true"
+      data-show-fullscreen="true"
+      data-toolbar=".buttons-toolbar"
+      data-locale="es-NI"
+    >
+      <thead>
+          <th data-sortable="true" data-field="id">No.</th>
+          <th data-sortable="true" data-field="cliente">Nombre </th>
+          <th data-sortable="true" data-field="area">Area de etiqueta </th>
+          <th data-sortable="true" data-field="tipo_impresion">Tipo de impresión</th>
+          <th data-sortable="true" data-field="maquina_impresion"> Impresora </th>
+          <th data-sortable="true" data-field="tiempo_impresion"> Tiempo de impresion</th>
+          <th data-sortable="true" data-field="tipo_papel"> Papel </th>
+          <th data-sortable="true" data-field="noetiquetas"> # de etiquetas </th>
+          <th data-sortable="true" data-field="porc_utilidad">Utilidad </th>
+          <th data-sortable="true" data-field="porc_desperdicio">Desperdicio </th>
+          <th data-sortable="true" data-field="costo"> Costo </th>
+          <th class="all">Acciones</th>
+      </thead>
+      <tbody>
+        {% if object_list %}
+    		{% for usuario in object_list %}
+    		<tr>
+    			<td>{{ usuario.id }}</td>
+    			<td>{{ usuario.cliente.nombre }} {{ usuario.cliente.apellido }}</td>
+          	<td>{{ usuario.area }} in² </td>
+    			<td>{{ usuario.tipo_impresion }} </td>
+          <td>{{ usuario.maquina_impresion }} </td>
+          <td>{{ usuario.tiempo_impresion  }} h </td>
+          <td>{{ usuario.tipo_papel }} </td>
+          <td>{{ usuario.noetiquetas }} </td>
+          <td>{{ usuario.porc_utilidad }} % </td>
+          <td>{{ usuario.porc_desperdicio }} in² </td>
+          <td>$ {{ usuario.costo|intcomma }} </td>
+
+    			<td>
+            <a class="btn btn-primary" href="{% url 'cotizacion:editar' usuario.id %}"> Editar </a>
+    			</td>
+    		</tr>
+    		{% endfor %}
+
+    		{% else %}
+    		<h1> </h1>
+    		{% endif %}
+      </tbody>
+
+    </table>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+
+
+       $("#btnnewmimp").click(function(e){
+
+                  abrir_modal("{% url 'inventario:crear_impresora' %}");
+
+
+               });
+
+
+</script>
+
+
+
+{% endblock %}

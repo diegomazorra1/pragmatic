@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card shadow mb-4">
+  <!-- Card Header - Dropdown -->
+  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+    <h6 class="m-0 font-weight-bold text-primary">Listado de Usuarios </h6>
+
+  </div>
+  <!-- Card Body -->
+  <div class="card-body">
+    {% if not object_list %}
+    <div class="alert alert-info">No Hay Usuarios </div>
+    {% endif %}
+    <div class="buttons-toolbar">
+        <a class="btn btn-success" onclick="#" id="btn_newclient" href="#"><i class="far fa-calendar-plus"></i> Nuevo</a>
+    </div>
+
+    <table
+      id="table"
+      data-toggle="table"
+      data-pagination="true"
+      data-search="true"
+      data-show-columns="true"
+      data-show-toggle="true"
+      data-show-fullscreen="true"
+      data-toolbar=".buttons-toolbar"
+      data-locale="es-NI"
+    >
+      <thead>
+          <th data-sortable="true" data-field="id">No.</th>
+          <th data-sortable="true" data-field="nombre">Nombre </th>
+          <th data-sortable="true" data-field="apellido">Apellido </th>
+          <th data-sortable="true" data-field="tipo">Tipo de cliente </th>
+          <th data-sortable="true" data-field="cc">Numero de cedula </th>
+          <th data-sortable="true" data-field="n_cel">Numero de celular </th>
+
+          <th class="all">Acciones</th>
+      </thead>
+      <tbody>
+        {% if object_list %}
+    		{% for usuario in object_list %}
+    		<tr>
+    			<td>{{ usuario.id }}</td>
+    			<td>{{ usuario.nombre }}</td>
+    			<td>{{ usuario.apellido }}</td>
+          <td>{{ usuario.tipo }}</td>
+          <td>{{ usuario.cc }}</td>
+          <td>{{ usuario.n_cel }}</td>
+
+    			<td>
+            <a class="btn btn-primary" href="{% url 'cotizacion:crear' usuario.id %}"> Cotización </a>
+    			</td>
+
+    		</tr>
+    		{% endfor %}
+
+    		{% else %}
+    		<h1> </h1>
+    		{% endif %}
+      </tbody>
+
+    </table>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+
+
+$("#btn_newclient").click(function(e){
+
+ abrir_modal("{% url 'usuario:nuevo' %}");
+
+   });
+
+
+
+
+</script>
+
+
+
+{% endblock %}

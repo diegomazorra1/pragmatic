@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card shadow mb-4">
+  <!-- Card Header - Dropdown -->
+  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+    <h6 class="m-0 font-weight-bold text-primary">Listado de Impresoras </h6>
+
+  </div>
+  <!-- Card Body -->
+  <div class="card-body">
+    {% if not object_list %}
+    <div class="alert alert-info">No Hay Impresoras Registradas</div>
+    {% endif %}
+    <div class="buttons-toolbar">
+        <a class="btn btn-success"  id="btnnewmimp" href="#"><i class="far fa-calendar-plus"></i> Nueva impresora</a>
+    </div>
+
+    <table
+      id="table"
+      data-toggle="table"
+      data-pagination="true"
+      data-search="true"
+      data-show-columns="true"
+      data-show-toggle="true"
+      data-show-fullscreen="true"
+      data-toolbar=".buttons-toolbar"
+      data-locale="es-NI"
+    >
+      <thead>
+          <th data-sortable="true" data-field="id">No.</th>
+          <th data-sortable="true" data-field="nombre">Nombre </th>
+          <th data-sortable="true" data-field="tiempo_pre">Tiempo Preparacion </th>
+          <th data-sortable="true" data-field="largo_rodillo">Largo de rodillo </th>
+              <th data-sortable="true" data-field="velocidad_imp">Velocidad de impresion </th>
+
+          <th class="all">Acciones</th>
+      </thead>
+      <tbody>
+        {% if object_list %}
+    		{% for usuario in object_list %}
+    		<tr>
+    			<td>{{ usuario.id }}</td>
+    			<td>{{ usuario.nombre }}</td>
+    			<td>{{ usuario.tiempo_pre }} horas</td>
+          	<td>{{ usuario.largo_rodillo }} in</td>
+          <td>{{ usuario.velocidad_imp }} in/min </td>
+
+    			<td>
+            <a class="btn btn-primary"  href="{% url 'inventario:editar_impresora' usuario.id %}"> Editar </a>
+    			</td>
+    		</tr>
+    		{% endfor %}
+
+    		{% else %}
+    		<h1> </h1>
+    		{% endif %}
+      </tbody>
+
+    </table>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+
+
+       $("#btnnewmimp").click(function(e){
+
+                  abrir_modal("{% url 'inventario:crear_impresora' %}");
+
+
+               });
+
+
+
+</script>
+
+
+
+{% endblock %}
