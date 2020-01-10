@@ -52,7 +52,7 @@ class Cotizacion(models.Model):
 
         while impresora.largo_rodillo > arriba_etiqueta:
             n+=1
-            arriba_etiqueta=arriba_etiqueta*n
+            arriba_etiqueta=arriba_etiqueta_inicial*n
             
             if impresora.largo_rodillo<= arriba_etiqueta:
 
